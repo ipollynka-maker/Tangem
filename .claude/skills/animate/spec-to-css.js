@@ -2,8 +2,8 @@
 'use strict';
 
 const CSS_EASING = {
-  spring_overshoot: 'cubic-bezier(0.2, 1.3, 0.4, 0)',
-  bounce:           'cubic-bezier(0.2, 1.5, 0.4, 0)',
+  spring_overshoot: 'cubic-bezier(0.2, 1.3, 0.4, 1)',
+  bounce:           'cubic-bezier(0.2, 1.5, 0.4, 1)',
   ease_in_out:      'cubic-bezier(0.4, 0, 0.2, 1)',
   ease_in:          'cubic-bezier(0.4, 0, 1.0, 1)',
   ease_out:         'cubic-bezier(0.0, 0, 0.2, 1)',
