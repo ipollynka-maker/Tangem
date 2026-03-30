@@ -51,7 +51,13 @@ function buildLottieLayer(layer, index, spec) {
     }))}; break;
     case 'rotate':
     case 'rotateZ':    ks.r = { a: 1, k: kf }; break;
-    default:           ks.p = { a: 1, k: kf };
+    default:
+      console.warn(`[spec-to-lottie] unknown property "${layer.property}", treating as translateX`);
+      ks.p = { a: 1, k: kf.map(k => ({ ...k,
+        s: k.s ? [k.s[0], 0, 0] : undefined,
+        e: k.e ? [k.e[0], 0, 0] : undefined,
+      }))};
+      break;
   }
 
   const assetIndex = Object.keys(spec.assets || {}).indexOf(layer.id);

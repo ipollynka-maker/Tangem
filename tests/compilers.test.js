@@ -67,3 +67,17 @@ test('specToLottie: assets array populated from spec.assets', () => {
   assert.ok(lottie.assets.length >= 1);
   assert.equal(lottie.assets[0].p, 'card.png');
 });
+
+test('specToLottie: to_final produces 3 keyframes on opacity layer', () => {
+  const spec = { ...SAMPLE_SPEC, assets: {}, layers: [
+    { id: 'el', property: 'opacity', from: 0, to: 1, to_final: 0.5,
+      start_at: 0, easing: 'ease_in_out',
+      render_compatible: true, lottie_compatible: true },
+  ]};
+  const lottie = specToLottie(spec);
+  const kfs = lottie.layers[0].ks.o.k;
+  assert.equal(kfs.length, 3);
+  assert.equal(kfs[0].s[0], 0);    // from: 0 * 100
+  assert.equal(kfs[1].s[0], 100);  // to: 1 * 100
+  assert.equal(kfs[2].s[0], 50);   // to_final: 0.5 * 100
+});
