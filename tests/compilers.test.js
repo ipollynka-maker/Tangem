@@ -116,3 +116,24 @@ test('specToRemotionTsx: skips render_compatible=false layers', () => {
   // no spring/interpolate calls if no render-compatible layers
   assert.ok(!tsx.includes('spring(') && !tsx.includes('interpolate('));
 });
+
+const { specToAeScript } = require('../.claude/skills/animate/spec-to-ae.js');
+
+test('specToAeScript: output is a string containing IIFE wrapper', () => {
+  const script = specToAeScript(SAMPLE_SPEC);
+  assert.ok(typeof script === 'string');
+  assert.ok(script.includes('(function()'), `got: ${script.slice(0, 100)}`);
+  assert.ok(script.includes('})();'));
+});
+
+test('specToAeScript: creates comp with correct duration and fps', () => {
+  const script = specToAeScript(SAMPLE_SPEC);
+  assert.ok(script.includes(`${SAMPLE_SPEC.duration}`));
+  assert.ok(script.includes(`${SAMPLE_SPEC.fps}`));
+});
+
+test('specToAeScript: references each layer id', () => {
+  const script = specToAeScript(SAMPLE_SPEC);
+  assert.ok(script.includes('"card"'));
+  assert.ok(script.includes('"shimmer"'));
+});
