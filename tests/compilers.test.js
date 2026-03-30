@@ -137,3 +137,25 @@ test('specToAeScript: references each layer id', () => {
   assert.ok(script.includes('"card"'));
   assert.ok(script.includes('"shimmer"'));
 });
+
+const { specToCss } = require('../.claude/skills/animate/spec-to-css.js');
+
+test('specToCss: output contains @keyframes block', () => {
+  const css = specToCss(SAMPLE_SPEC);
+  assert.ok(css.includes('@keyframes'), `got: ${css.slice(0, 200)}`);
+});
+
+test('specToCss: opacity uses 0-1 values (not 0-100)', () => {
+  const spec = { ...SAMPLE_SPEC, assets: {}, layers: [
+    { id: 'el', property: 'opacity', from: 0, to: 1, easing: 'ease_in_out',
+      render_compatible: false, lottie_compatible: false },
+  ]};
+  const css = specToCss(spec);
+  assert.ok(css.includes('opacity: 0') && css.includes('opacity: 1'));
+  assert.ok(!css.includes('opacity: 100'));
+});
+
+test('specToCss: class rule references animation name', () => {
+  const css = specToCss(SAMPLE_SPEC);
+  assert.ok(css.includes('.card-enter-card'));
+});
