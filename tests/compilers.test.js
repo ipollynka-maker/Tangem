@@ -81,3 +81,38 @@ test('specToLottie: to_final produces 3 keyframes on opacity layer', () => {
   assert.equal(kfs[1].s[0], 100);  // to: 1 * 100
   assert.equal(kfs[2].s[0], 50);   // to_final: 0.5 * 100
 });
+
+const { specToRemotionTsx } = require('../.claude/skills/animate/spec-to-remotion.js');
+
+test('specToRemotionTsx: exports a named function matching spec.name', () => {
+  const tsx = specToRemotionTsx(SAMPLE_SPEC);
+  assert.ok(tsx.includes('export function CardEnter('), `got: ${tsx.slice(0, 200)}`);
+});
+
+test('specToRemotionTsx: uses spring() for spring_overshoot easing', () => {
+  const tsx = specToRemotionTsx(SAMPLE_SPEC);
+  assert.ok(tsx.includes('spring('), `expected spring(), got: ${tsx.slice(0, 300)}`);
+});
+
+test('specToRemotionTsx: uses interpolate() for ease_in_out easing', () => {
+  const spec = { ...SAMPLE_SPEC, layers: [
+    { id: 'el', property: 'opacity', from: 0, to: 1, easing: 'ease_in_out',
+      render_compatible: true, lottie_compatible: true },
+  ]};
+  const tsx = specToRemotionTsx(spec);
+  assert.ok(tsx.includes('interpolate('));
+});
+
+test('specToRemotionTsx: uses staticFile() for bound assets', () => {
+  const tsx = specToRemotionTsx(SAMPLE_SPEC);
+  assert.ok(tsx.includes('staticFile('));
+});
+
+test('specToRemotionTsx: skips render_compatible=false layers', () => {
+  const spec = { ...SAMPLE_SPEC, layers: [
+    { ...SAMPLE_SPEC.layers[0], render_compatible: false },
+  ]};
+  const tsx = specToRemotionTsx(spec);
+  // no spring/interpolate calls if no render-compatible layers
+  assert.ok(!tsx.includes('spring(') && !tsx.includes('interpolate('));
+});
