@@ -31,14 +31,26 @@ function layerScript(layer, index, spec) {
     : '// no asset — using placeholder solid';
 
   const isOpacity = layer.property === 'opacity';
+  const isPosition = layer.property.startsWith('translate');
   const mult = isOpacity ? 100 : 1;
 
+  // For position: [x, y]. translateX affects x, translateY affects y.
+  function posValue(v) {
+    if (layer.property === 'translateX') return `[${v}, 0]`;
+    if (layer.property === 'translateY') return `[0, ${v}]`;
+    return `[${v}, ${v}]`; // translateZ or other — fallback
+  }
+
+  function formatValue(v) {
+    return isPosition ? posValue(v * mult) : v * mult;
+  }
+
   const keyframeLines = layer.to_final !== undefined
-    ? `  prop${index}.setValueAtTime(${startFrame} / comp.frameRate, ${layer.from * mult});
-  prop${index}.setValueAtTime(${Math.round(totalFrames * 0.6)} / comp.frameRate, ${layer.to * mult});
-  prop${index}.setValueAtTime(${totalFrames} / comp.frameRate, ${layer.to_final * mult});`
-    : `  prop${index}.setValueAtTime(${startFrame} / comp.frameRate, ${layer.from * mult});
-  prop${index}.setValueAtTime(${totalFrames} / comp.frameRate, ${layer.to * mult});`;
+    ? `  prop${index}.setValueAtTime(${startFrame} / comp.frameRate, ${formatValue(layer.from)});
+  prop${index}.setValueAtTime(${Math.round(totalFrames * 0.6)} / comp.frameRate, ${formatValue(layer.to)});
+  prop${index}.setValueAtTime(${totalFrames} / comp.frameRate, ${formatValue(layer.to_final)});`
+    : `  prop${index}.setValueAtTime(${startFrame} / comp.frameRate, ${formatValue(layer.from)});
+  prop${index}.setValueAtTime(${totalFrames} / comp.frameRate, ${formatValue(layer.to)});`;
 
   return `
   // --- Layer ${index}: ${layer.id} (${layer.property}) ---
@@ -53,6 +65,9 @@ ${keyframeLines}
     var easeIn  = new KeyframeEase(0, ${ease.inInfluence});
     prop${index}.setTemporalEaseAtKey(1, [easeOut], [easeIn]);
     prop${index}.setTemporalEaseAtKey(2, [easeOut], [easeIn]);
+    if (prop${index}.numKeys >= 3) {
+      prop${index}.setTemporalEaseAtKey(3, [easeOut], [easeIn]);
+    }
   }`;
 }
 
