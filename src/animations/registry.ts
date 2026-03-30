@@ -4,35 +4,11 @@
 
 import type { ComponentType } from 'react';
 import type { AnimationSpec } from './types';
-import { TestEnter } from './TestEnter';
-import { CardSpringEnter } from './CardSpringEnter';
 
 export interface AnimationRegistration {
-  id: string;             // Remotion composition ID
+  id: string;
   component: ComponentType;
   spec: AnimationSpec;
 }
 
-export const animationRegistry: AnimationRegistration[] = [  { id: 'TestEnter', component: TestEnter, spec: {
-    "name": "test-enter",
-    "duration": 1,
-    "fps": 30,
-    "lottie_compatible": true,
-    "assets": {},
-    "layers": [
-      {
-        "id": "box",
-        "property": "translateY",
-        "from": 100,
-        "to": 0,
-        "easing": "spring_overshoot",
-        "spring": {
-          "stiffness": 200,
-          "damping": 22
-        },
-        "render_compatible": true,
-        "lottie_compatible": true
-      }
-    ]
-  } },
-];
+export const animationRegistry: AnimationRegistration[] = [];

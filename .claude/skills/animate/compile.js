@@ -28,9 +28,6 @@ function writeFile(filePath, content) {
 function updateRegistry(spec, projectRoot) {
   const registryPath = path.join(projectRoot, 'src/animations/registry.ts');
   const componentName = toPascalCase(spec.name);
-  const importLine = `import { ${componentName} } from './${componentName}';`;
-  const specJson = JSON.stringify(spec, null, 2).split('\n').map((l, i) => i === 0 ? l : '  ' + l).join('\n');
-  const entry = `  { id: '${componentName}', component: ${componentName}, spec: ${specJson} },`;
 
   let content = fs.existsSync(registryPath) ? fs.readFileSync(registryPath, 'utf8') : '';
 
@@ -40,11 +37,24 @@ function updateRegistry(spec, projectRoot) {
     return;
   }
 
-  // Insert import after last existing import line
-  content = content.replace(/(import.*\n)(?!import)/, `$1${importLine}\n`);
-  // Insert entry before closing bracket of animationRegistry array
-  content = content.replace(/(\nexport const animationRegistry[^=]+=\s*\[)([^\]]*?)(\];)/s,
-    (_, open, body, close) => `${open}${body}${entry}\n${close}`);
+  const importLine = `import { ${componentName} } from './${componentName}';`;
+  const specJson = JSON.stringify(spec, null, 2).split('\n').map((l, i) => i === 0 ? l : '  ' + l).join('\n');
+  const entry = `  { id: '${componentName}', component: ${componentName}, spec: ${specJson} },\n  // __REGISTRY_END__`;
+
+  if (content.includes('// __REGISTRY_END__')) {
+    // Subsequent registrations: replace the sentinel
+    content = content.replace('// __REGISTRY_END__', entry);
+    // Add import before the sentinel import block end
+    content = content.replace(/(import[^\n]+\n)(\n|export)/, `$1${importLine}\n$2`);
+  } else {
+    // First registration: replace empty array and add import
+    content = content.replace(
+      /export const animationRegistry[^=]+=\s*\[\];/,
+      `export const animationRegistry: AnimationRegistration[] = [\n  // __REGISTRY_END__\n];`
+    );
+    content = content.replace('// __REGISTRY_END__', entry);
+    content = content.replace(/(import[^\n]+\n)(\n|export)/, `$1${importLine}\n$2`);
+  }
 
   writeFile(registryPath, content);
 }

@@ -2,6 +2,8 @@
 'use strict';
 
 const EASING_FN = {
+  spring_overshoot: 'Easing.out(Easing.ease)',
+  bounce:           'Easing.out(Easing.ease)',
   ease_in_out: 'Easing.inOut(Easing.ease)',
   ease_in:     'Easing.in(Easing.ease)',
   ease_out:    'Easing.out(Easing.ease)',

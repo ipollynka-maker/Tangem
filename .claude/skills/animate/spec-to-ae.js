@@ -8,7 +8,6 @@ const AE_EASE = {
   ease_in_out:      { outInfluence: 33, inInfluence: 33 },
   ease_in:          { outInfluence: 60, inInfluence: 10 },
   ease_out:         { outInfluence: 10, inInfluence: 60 },
-  linear:           { outInfluence: 0,  inInfluence: 0  },
 };
 
 // AE transform property names inside "ADBE Transform Group"
@@ -60,6 +59,11 @@ function layerScript(layer, index, spec) {
   var tg${index} = layer${index}.property("ADBE Transform Group");
   var prop${index} = tg${index}.property("${prop}");
 ${keyframeLines}
+  ${layer.easing === 'linear' ? `
+  // Linear: set interpolation type instead of ease handles (KeyframeEase(0,0) is invalid in AE)
+  for (var ki = 1; ki <= prop${index}.numKeys; ki++) {
+    prop${index}.setInterpolationTypeAtKey(ki, KeyframeInterpolationType.LINEAR);
+  }` : `
   if (prop${index}.numKeys >= 2) {
     var easeOut = new KeyframeEase(0, ${ease.outInfluence});
     var easeIn  = new KeyframeEase(0, ${ease.inInfluence});
@@ -68,7 +72,7 @@ ${keyframeLines}
     if (prop${index}.numKeys >= 3) {
       prop${index}.setTemporalEaseAtKey(3, [easeOut], [easeIn]);
     }
-  }`;
+  }`}`;
 }
 
 function specToAeScript(spec) {
