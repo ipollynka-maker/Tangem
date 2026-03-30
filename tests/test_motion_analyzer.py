@@ -54,3 +54,5 @@ def test_analyze_returns_expected_shape():
     # Should detect at least one moving element
     assert len(result['elements']) >= 1
     assert 'easing_hint' in result['elements'][0]
+    assert result['elements'][0]['easing_hint'] == 'linear', \
+        f"Expected linear for uniform motion, got: {result['elements'][0]['easing_hint']}"

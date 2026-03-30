@@ -17,6 +17,8 @@ from pathlib import Path
 def load_frames(path: str) -> tuple:
     """Returns (frames: list[np.ndarray gray], fps: float)."""
     p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(f"Input file not found: {path}")
     if p.suffix.lower() == '.gif':
         return _load_gif_frames(path)
     return _load_video_frames(path)
@@ -33,6 +35,8 @@ def _load_gif_frames(path: str) -> tuple:
                 img.seek(img.tell() + 1)
         except EOFError:
             pass
+    if not frames:
+        raise ValueError(f"No frames found in GIF: {path}")
     avg_ms = sum(durations) / len(durations) if durations else 100
     return frames, round(1000.0 / avg_ms, 2)
 
@@ -48,6 +52,8 @@ def _load_video_frames(path: str) -> tuple:
             break
         frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
     cap.release()
+    if not frames:
+        raise ValueError(f"Could not read frames from: {path}")
     return frames, fps
 
 
@@ -127,11 +133,16 @@ def analyze_frames(frames: list, fps: float) -> dict:
 
     elements = []
     for r in regions:
+        # Use dominant axis (whichever has more range: x or y)
+        x_vals = [pt[1] for pt in r['path']]
         y_vals = [pt[2] for pt in r['path']]
-        mn, mx = min(y_vals), max(y_vals)
+        x_range = max(x_vals) - min(x_vals)
+        y_range = max(y_vals) - min(y_vals)
+        vals = x_vals if x_range > y_range else y_vals
+        mn, mx = min(vals), max(vals)
         if mx - mn < 0.01:
             continue
-        normalized = [(v - mn) / (mx - mn) for v in y_vals]
+        normalized = [(v - mn) / (mx - mn) for v in vals]
         elements.append({
             'id': r['id'],
             'path': r['path'],
