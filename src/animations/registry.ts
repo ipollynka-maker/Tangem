@@ -5,6 +5,7 @@
 import type { ComponentType } from 'react';
 import type { AnimationSpec } from './types';
 import { TestEnter } from './TestEnter';
+import { CardSpringEnter } from './CardSpringEnter';
 
 export interface AnimationRegistration {
   id: string;             // Remotion composition ID
