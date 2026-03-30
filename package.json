@@ -13,7 +13,7 @@
   "description": "",
   "dependencies": {
     "@remotion/cli": "4.0.440",
-    "@remotion/lottie": "^4.0.441",
+    "@remotion/lottie": "4.0.440",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remotion": "4.0.440"
