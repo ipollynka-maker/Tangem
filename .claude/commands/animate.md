@@ -66,7 +66,7 @@ Wait for the user's response.
 
 Run:
 ```bash
-node .claude/skills/animate/compile.js specs/{name}.json --target={target}
+node ~/.claude/skills/animate/compile.js specs/{name}.json --target={target}
 ```
 
 ## Step 6 — Preview render (if Remotion component was generated)
