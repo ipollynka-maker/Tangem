@@ -45,7 +45,15 @@ A `/animate` Claude Code skill that converts a GIF/video reference + text descri
 - Outputs: **Animation Spec JSON** saved to `specs/{name}.json`
 - The spec is the source of truth — colleagues can edit it directly to iterate without re-running the full pipeline
 
-### 4. Library Resolver
+### 4. Asset Binding (interactive)
+- After generating the spec, Claude lists every layer it found and asks:
+  > "I found 2 layers: `card`, `shimmer`. Map them to your assets, or press enter to use placeholders."
+- User responds with paths: `card=assets/tangem-card.png shimmer=assets/shimmer.svg`
+- Bindings are saved into the spec under `"assets": { "card": "...", "shimmer": "..." }`
+- If user skips, compilers use placeholder boxes (visible in preview but clearly marked)
+- Asset paths are relative to the project root
+
+### 5. Library Resolver
 - Claude maps each layer in the spec to the best available library:
   - `spring_overshoot` → Remotion `spring({ stiffness, damping })`
   - Standard easing → Lottie-compatible bezier
@@ -54,7 +62,7 @@ A `/animate` Claude Code skill that converts a GIF/video reference + text descri
 - Adds `render_compatible: true/false` per layer
 - If any layer is `render_compatible: false`, preview step is skipped with a clear message
 
-### 5. Compile
+### 6. Compile
 Compilers run from the spec. Outputs saved alongside spec:
 
 | File | Format | When generated |
@@ -64,7 +72,7 @@ Compilers run from the spec. Outputs saved alongside spec:
 | `ae-scripts/{name}.jsx` | AE ExtendScript | When exceeds Lottie capabilities or `--target ae` |
 | `src/animations/{name}.css` | CSS keyframes | Web-only animations |
 
-### 6. Preview
+### 7. Preview
 - Remotion renders `{Name}.tsx` → `out/{name}-preview.mp4`
 - Auto-opens for review
 - Skipped with note if animation is not render-compatible
@@ -79,6 +87,10 @@ Compilers run from the spec. Outputs saved alongside spec:
   "duration": 1.2,
   "fps": 30,
   "lottie_compatible": true,
+  "assets": {
+    "card": "assets/tangem-card.png",
+    "shimmer": "assets/shimmer.svg"
+  },
   "layers": [
     {
       "id": "card",
