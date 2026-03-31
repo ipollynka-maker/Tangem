@@ -1,0 +1,12 @@
+<svg width="780" height="500" viewBox="0 0 780 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="780" height="500" rx="40" fill="#0D3B2E"/>
+  <!-- Wire / signal icon: radiating arcs left side -->
+  <circle cx="280" cy="250" r="12" fill="white" opacity="0.9"/>
+  <path d="M298 232 a26 26 0 0 1 0 36" stroke="white" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.75"/>
+  <path d="M315 214 a52 52 0 0 1 0 72" stroke="white" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M332 196 a78 78 0 0 1 0 108" stroke="white" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.3"/>
+  <!-- WIRE label -->
+  <text x="370" y="272" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="96" font-weight="700" fill="white" letter-spacing="-3">WIRE</text>
+  <!-- Subtitle -->
+  <text x="370" y="312" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="300" fill="white" opacity="0.6" letter-spacing="2">TRANSFER</text>
+</svg>

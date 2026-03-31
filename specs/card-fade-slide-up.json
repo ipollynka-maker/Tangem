@@ -1,0 +1,27 @@
+{
+  "name": "card-fade-slide-up",
+  "duration": 1.2,
+  "fps": 30,
+  "lottie_compatible": true,
+  "assets": {},
+  "layers": [
+    {
+      "id": "card",
+      "property": "translateY",
+      "from": 120, "to": 0,
+      "easing": "spring_bounce",
+      "spring": { "stiffness": 200, "damping": 12, "mass": 1 },
+      "render_compatible": true,
+      "lottie_compatible": true
+    },
+    {
+      "id": "card",
+      "property": "opacity",
+      "from": 0, "to": 1,
+      "easing": "ease_out",
+      "frame_range": [0, 15],
+      "render_compatible": true,
+      "lottie_compatible": true
+    }
+  ]
+}

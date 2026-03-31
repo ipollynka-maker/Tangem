@@ -1,0 +1,60 @@
+{
+  "name": "cards",
+  "duration": 6.0,
+  "fps": 30,
+  "lottie_compatible": false,
+  "assets": {
+    "card1": "1.png",
+    "card2": "2.png",
+    "card3": "3.png"
+  },
+  "layers": [
+    {
+      "id": "card",
+      "property": "translateY",
+      "from": "height*0.75",
+      "to": "-height*0.75",
+      "easing": "ease_in_out",
+      "passes": 4,
+      "overlap": 0.25,
+      "render_compatible": true,
+      "lottie_compatible": true
+    },
+    {
+      "id": "card",
+      "property": "rotateX",
+      "keyframes": [30, 8, 0, -8, -30],
+      "keyframe_positions": [0, 0.3, 0.5, 0.7, 1],
+      "easing": "ease_in_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card",
+      "property": "rotateZ",
+      "keyframes": [-10, -5, -2],
+      "keyframe_positions": [0, 0.5, 1],
+      "easing": "ease_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card",
+      "property": "scale",
+      "keyframes": [0.5, 0.82, 1, 0.82, 0.5],
+      "keyframe_positions": [0, 0.22, 0.5, 0.78, 1],
+      "easing": "ease_in_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card",
+      "property": "opacity",
+      "keyframes": [0, 1, 1, 0],
+      "keyframe_positions": [0, 0.1, 0.9, 1],
+      "easing": "ease_out",
+      "render_compatible": true,
+      "lottie_compatible": true
+    }
+  ]
+}

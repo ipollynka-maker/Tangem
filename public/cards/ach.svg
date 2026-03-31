@@ -1,0 +1,16 @@
+<svg width="780" height="500" viewBox="0 0 780 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="780" height="500" rx="40" fill="#1A2744"/>
+  <!-- Bank icon: columns -->
+  <rect x="277" y="200" width="18" height="90" rx="4" fill="white" opacity="0.9"/>
+  <rect x="311" y="200" width="18" height="90" rx="4" fill="white" opacity="0.9"/>
+  <rect x="345" y="200" width="18" height="90" rx="4" fill="white" opacity="0.9"/>
+  <rect x="379" y="200" width="18" height="90" rx="4" fill="white" opacity="0.9"/>
+  <!-- Base bar -->
+  <rect x="265" y="292" width="148" height="12" rx="4" fill="white" opacity="0.9"/>
+  <!-- Roof triangle -->
+  <path d="M256 202 L339 155 L422 202 Z" fill="white" opacity="0.9"/>
+  <!-- ACH label -->
+  <text x="450" y="270" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="96" font-weight="700" fill="white" letter-spacing="-3">ACH</text>
+  <!-- Subtitle -->
+  <text x="450" y="310" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="300" fill="white" opacity="0.6" letter-spacing="2">DIRECT DEPOSIT</text>
+</svg>

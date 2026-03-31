@@ -1,0 +1,51 @@
+{
+  "name": "cards-fan",
+  "duration": 6.0,
+  "fps": 30,
+  "width": 800,
+  "height": 800,
+  "lottie_compatible": false,
+  "assets": {
+    "card1": "photo1.png",
+    "card2": "photo2.png",
+    "card3": "photo3.png"
+  },
+  "layers": [
+    {
+      "id": "card1",
+      "property": "translateX",
+      "easing": "ease_in_out",
+      "note": "Fan cycle — slots: center(0,0), right(+172,+18 rotZ+12), left(-158,+14 rotZ-14). 3 states × 60f each.",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card1",
+      "property": "translateY",
+      "easing": "ease_in_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card1",
+      "property": "rotateZ",
+      "easing": "ease_in_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card2",
+      "property": "translateX",
+      "easing": "ease_in_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    },
+    {
+      "id": "card3",
+      "property": "translateX",
+      "easing": "ease_in_out",
+      "render_compatible": true,
+      "lottie_compatible": false
+    }
+  ]
+}
