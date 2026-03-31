@@ -1,13 +1,12 @@
 {
   "name": "tangem-animation",
   "version": "1.0.0",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "remotion studio",
     "render": "remotion render CardScroll out/card-scroll.mp4",
     "render:gif": "remotion render CardScroll out/card-scroll.gif",
-    "spec": "node spec-wizard.js"
+    "spec": "python3 spec-wizard.py"
   },
   "keywords": [],
   "author": "",
