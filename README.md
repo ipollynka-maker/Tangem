@@ -24,28 +24,9 @@ That's it. No API key needed — the pipeline uses your Claude Code session.
 
 ---
 
-## What's in the repo
-
-### Existing animations (`specs/`)
-
-| Spec file | What it does | Lottie? |
-|-----------|-------------|---------|
-| `card-fade-slide-up.json` | Card slides up from below with bounce spring + fade-in | ✓ |
-| `card-spring-enter.json` | Card enters with a strong spring overshoot | ✓ |
-| `cards-fan.json` | 3 cards fan out in a cycle (like Tangem card selector) | ✗ |
-| `cards.json` | Basic card reveal sequence | ✓ |
-| `payment-methods-carousel.json` | Payment method icons carousel | ✗ |
-
-Pre-compiled outputs live in:
-- `src/animations/` — Remotion (`.tsx`), CSS, GSAP, Framer Motion, HTML demo, Three.js
-- `animations/` — Lottie (`.json`)
-- `ae-scripts/` — After Effects (`.jsx`)
-
----
-
 ## Two ways to create an animation
 
-### Option A — Spec Wizard (recommended for new animations)
+### Option A — Spec Wizard (recommended)
 
 Run this from the project directory:
 
@@ -96,20 +77,20 @@ The wizard understands natural language but more detail = better result.
 
 ```bash
 # All formats at once
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json
+node ~/.claude/skills/animate/compile.js specs/my-animation.json
 
 # Specific format only
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=lottie
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=remotion
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=ae
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=css
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=gsap
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=motion
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=html
-node ~/.claude/skills/animate/compile.js specs/card-fade-slide-up.json --target=threejs
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=lottie
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=remotion
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=ae
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=css
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=gsap
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=motion
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=html
+node ~/.claude/skills/animate/compile.js specs/my-animation.json --target=threejs
 ```
 
-### Output locations (default)
+### Output locations
 
 | Target | Output path |
 |--------|-------------|
@@ -143,7 +124,7 @@ The compiler will wire up `staticFile('card.png')` in Remotion and the correct a
 
 ---
 
-## Preview and download
+## Preview and export
 
 **Remotion Studio (live preview):**
 ```bash
@@ -153,7 +134,7 @@ npm start
 
 **Render to MP4:**
 ```bash
-npx remotion render CardFadeSlideUp out/card-fade-slide-up.mp4
+npx remotion render MyAnimation out/my-animation.mp4
 ```
 
 **Render to GIF:**
@@ -163,13 +144,13 @@ npm run render:gif
 
 **HTML demo — just open in a browser:**
 ```
-src/animations/html/card-fade-slide-up.html
+src/animations/html/my-animation.html
 ```
 Double-click or drag to any browser. No server needed. Good for sharing with stakeholders.
 
 **Lottie file** — ready to drop into iOS/Android/Web SDK:
 ```
-animations/card-fade-slide-up.json
+animations/my-animation.json
 ```
 
 **After Effects script:**
