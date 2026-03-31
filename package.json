@@ -1,19 +1,23 @@
 {
   "name": "tangem-animation",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "remotion studio",
     "render": "remotion render CardScroll out/card-scroll.mp4",
-    "render:gif": "remotion render CardScroll out/card-scroll.gif"
+    "render:gif": "remotion render CardScroll out/card-scroll.gif",
+    "spec": "node spec-wizard.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
     "@remotion/cli": "4.0.440",
     "@remotion/lottie": "4.0.440",
+    "anthropic": "^0.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remotion": "4.0.440"
