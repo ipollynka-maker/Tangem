@@ -21,7 +21,6 @@ function easingToTransition(layer) {
   return {
     type: 'tween',
     ease: EASE_CURVES[layer.easing] || [0, 0, 0.2, 1],
-    duration: null, // filled in per layer
   };
 }
 

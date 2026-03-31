@@ -119,14 +119,6 @@ import { gsap } from 'gsap';
 export function ${fnName}(container) {
   const tl = gsap.timeline({ paused: true });
 
-  // Scope all selectors to the container
-  const q = gsap.utils.selector(container);
-  gsap.utils.selector(container);
-
-  // Override the selector context
-  const origTo   = tl.to.bind(tl);
-  const origFrom = tl.from.bind(tl);
-
 ${tweens}
 
   return tl;

@@ -110,7 +110,7 @@ function main() {
 
   // --- Remotion component ---
   if (shouldOutput('remotion')) {
-    const renderLayers = spec.layers.filter(l => l.render_compatible);
+    const renderLayers = spec.layers.filter(l => l.render_compatible !== false);
     if (renderLayers.length > 0) {
       const componentName = toPascalCase(name);
       writeFile(

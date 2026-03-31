@@ -82,9 +82,11 @@ function specToThreejs(spec) {
     const ease = GSAP_EASE[layer.easing] || 'power2.out';
 
     if (layer.keyframes && layer.keyframe_positions) {
-      const kfVals = layer.keyframes.map(v => +(v * scale).toFixed(4));
-      const times = layer.keyframe_positions;
-      return `  tl.to(${varName}.${path.split('.')[0]}, { ${path.split('.').pop()}: [${kfVals.join(', ')}], duration: ${dur}, ease: '${ease}' }, ${delay});`;
+      const kfParts = path.split('.');
+      const kfTarget = kfParts.length > 1 ? `${varName}.${kfParts.slice(0, -1).join('.')}` : varName;
+      const kfProp = kfParts[kfParts.length - 1];
+      const kfObjs = layer.keyframes.map(v => JSON.stringify({ [kfProp]: +(v * scale).toFixed(4), ease })).join(', ');
+      return `  tl.to(${kfTarget}, { keyframes: [${kfObjs}], duration: ${dur} }, ${delay});`;
     }
 
     const from = +(layer.from * scale).toFixed(4);
@@ -93,16 +95,19 @@ function specToThreejs(spec) {
     const obj = pathParts.slice(0, -1).join('.');
     const prop = pathParts[pathParts.length - 1];
 
+    // When path has no dots (unknown fallback property), tween the mesh directly
+    const target = obj ? `${varName}.${obj}` : varName;
+
     // Spring
     if (layer.easing === 'spring_bounce' || layer.easing === 'spring_overshoot') {
       const s = layer.spring || {};
       const stiff = s.stiffness || (layer.easing === 'spring_bounce' ? 180 : 260);
       const damp  = s.damping   || (layer.easing === 'spring_bounce' ? 14  : 24);
       const comment = `// ~spring: stiffness ${stiff}, damping ${damp}`;
-      return `  tl.from(${varName}.${obj || path}, { ${prop}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay}); ${comment}`;
+      return `  tl.from(${target}, { ${prop}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay}); ${comment}`;
     }
 
-    let line = `  tl.from(${varName}.${obj || path}, { ${prop}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
+    let line = `  tl.from(${target}, { ${prop}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
     if (also) {
       also.forEach(p => {
         const ap = p.split('.').pop();

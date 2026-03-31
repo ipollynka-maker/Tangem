@@ -57,7 +57,8 @@ function buildCss3dHtml(spec) {
     const prop = PROP_MAP[layer.property] || layer.property;
 
     if (layer.keyframes && layer.keyframe_positions) {
-      return `    tl.to(${id}, { ${prop}: [${layer.keyframes.join(', ')}], duration: ${dur}, ease: '${ease}' }, ${delay});`;
+      const kfObj = layer.keyframes.map((v, i) => JSON.stringify({ [prop]: v, ease })).join(', ');
+      return `    tl.to(${id}, { keyframes: [${kfObj}], duration: ${dur} }, ${delay});`;
     }
     return `    tl.from(${id}, { ${prop}: ${layer.from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
   }).join('\n');
@@ -172,12 +173,14 @@ function buildThreejsHtml(spec) {
     const obj   = parts.slice(0, -1).join('.');
     const prop  = parts[parts.length - 1];
 
-    let line = `      tl.from(${varName}.${obj || path}, { ${prop}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
+    const target = obj ? `${varName}.${obj}` : varName;
+    let line = `      tl.from(${target}, { ${prop}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
     if (also) {
       also.forEach(p => {
         const ap = p.split('.').pop();
         const ao = p.split('.').slice(0, -1).join('.');
-        line += `\n      tl.from(${varName}.${ao}, { ${ap}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
+        const alsoTarget = ao ? `${varName}.${ao}` : varName;
+        line += `\n      tl.from(${alsoTarget}, { ${ap}: ${from}, duration: ${dur}, ease: '${ease}' }, ${delay});`;
       });
     }
     return line;

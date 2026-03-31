@@ -21,14 +21,6 @@ import { gsap } from 'gsap';
 export function createCardFadeSlideUp(container) {
   const tl = gsap.timeline({ paused: true });
 
-  // Scope all selectors to the container
-  const q = gsap.utils.selector(container);
-  gsap.utils.selector(container);
-
-  // Override the selector context
-  const origTo   = tl.to.bind(tl);
-  const origFrom = tl.from.bind(tl);
-
   tl.from('.card', { y: 120, duration: 1.2, ease: 'back.out(1.7)' }, 0);
   tl.from('.card', { opacity: 0, duration: 0.5, ease: 'power2.out' }, 0);
 
