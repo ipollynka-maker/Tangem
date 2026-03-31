@@ -6,7 +6,7 @@
     "start": "remotion studio",
     "render": "remotion render CardScroll out/card-scroll.mp4",
     "render:gif": "remotion render CardScroll out/card-scroll.gif",
-    "spec": "python3 spec-wizard.py"
+    "spec": "python3 ~/.claude/skills/animate/spec-wizard.py"
   },
   "keywords": [],
   "author": "",

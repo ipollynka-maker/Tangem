@@ -1,0 +1,7 @@
+{
+  "remotion": "src/animations",
+  "ae":       "ae-scripts",
+  "lottie":   "animations",
+  "css":      "src/animations",
+  "specs":    "specs"
+}
