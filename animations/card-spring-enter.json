@@ -7,19 +7,12 @@
   "h": 720,
   "nm": "card-spring-enter",
   "ddd": 0,
-  "assets": [
-    {
-      "id": "image_0",
-      "u": "",
-      "p": "card.png",
-      "e": 0
-    }
-  ],
+  "assets": [],
   "layers": [
     {
       "ddd": 0,
       "ind": 1,
-      "ty": 2,
+      "ty": 4,
       "nm": "card",
       "ks": {
         "p": {
@@ -69,13 +62,12 @@
       "ip": 0,
       "op": 36,
       "st": 0,
-      "bm": 0,
-      "refId": "image_0"
+      "bm": 0
     },
     {
       "ddd": 0,
       "ind": 2,
-      "ty": 2,
+      "ty": 4,
       "nm": "card",
       "ks": {
         "o": {
@@ -119,8 +111,7 @@
       "ip": 0,
       "op": 36,
       "st": 0,
-      "bm": 0,
-      "refId": "image_0"
+      "bm": 0
     }
   ],
   "markers": []

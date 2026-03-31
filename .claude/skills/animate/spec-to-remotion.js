@@ -16,6 +16,11 @@ function toPascalCase(name) {
   return name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
 }
 
+/** Camel-case a kebab/hyphen id to a valid JS identifier: 'visa-card' → 'visaCard' */
+function toVarId(id) {
+  return id.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+}
+
 /** Generate the value expression for one layer property. */
 function layerValueExpr(layer, fps) {
   const startFrame = Math.round((layer.start_at || 0) * fps);
@@ -41,7 +46,7 @@ function transformExpr(layers, id) {
   return layers
     .filter(l => l.id === id && l.property !== 'opacity')
     .map((l) => {
-      const varName = `${l.id}_${l.property}`;
+      const varName = `${toVarId(l.id)}_${l.property}`;
       if (l.property.startsWith('translate')) return `${l.property}(\${${varName}}px)`;
       if (l.property.startsWith('rotate'))    return `${l.property}(\${${varName}}deg)`;
       return `${l.property}(\${${varName}})`;
@@ -67,7 +72,7 @@ function specToRemotionTsx(spec) {
   ].filter(Boolean).join(', ');
 
   const valueDecls = renderLayers.map(l =>
-    `  const ${l.id}_${l.property} = ${layerValueExpr(l, fps)};`
+    `  const ${toVarId(l.id)}_${l.property} = ${layerValueExpr(l, fps)};`
   ).join('\n');
 
   const layerIds = [...new Set(renderLayers.map(l => l.id))];
@@ -77,11 +82,12 @@ function specToRemotionTsx(spec) {
     const opacity = props.find(l => l.property === 'opacity');
     const transforms = transformExpr(props, id);
     const assetPath = spec.assets?.[id];
+    const varId = toVarId(id);
 
     const styleLines = [
       `position: 'absolute'`,
       transforms && `transform: \`${transforms}\``,
-      opacity && `opacity: ${id}_opacity`,
+      opacity && `opacity: ${varId}_opacity`,
     ].filter(Boolean).join(', ');
 
     if (assetPath) {
