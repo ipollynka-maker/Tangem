@@ -3,5 +3,7 @@
   "ae":       "ae-scripts",
   "lottie":   "animations",
   "css":      "src/animations",
+  "gsap":     "src/animations/gsap",
+  "motion":   "src/animations/motion",
   "specs":    "specs"
 }
